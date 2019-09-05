@@ -30,19 +30,17 @@ class MetricGauge extends React.Component {
     const { gagueID } = this.state;
     const { maxValue, value, minValue } = this.props;
     const opts = {
-      angle: 0.005, // The span of the gauge arc
-      lineWidth: 0.22, // The line thickness
-      pointer: {
-        length: 0, // Relative to gauge radius
-        strokeWidth: 0.0, // The thickness
-      },
-      colorStart: '#6FADCF', // Colors
-      colorStop: '#8FC0DA', // just experiment with them
-      strokeColor: '#E0E0E0', // to see which ones work best for you
+      lines: 0.1,
+      angle: 0.25, // The span of the gauge arc
+      lineWidth: 0.1, // The line thickness
+      colorStart: '#f00',   // Colors
+      colorStop: '#a00',    // just experiment with them
+      strokeColor: '#eee',
+      percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]]
     };
 
     const target = document.getElementById(gagueID); // your canvas element
-    const gauge = new Gauge.Gauge(target).setOptions(opts); // create sexy gauge!
+    const gauge = new Gauge.Donut(target).setOptions(opts); // create sexy gauge!
     gauge.maxValue = maxValue; // set max gauge value
     gauge.setMinValue(minValue); // set min value
     gauge.set(value); // set actual value
