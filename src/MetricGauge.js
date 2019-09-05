@@ -29,19 +29,30 @@ class MetricGauge extends React.Component {
   componentDidMount() {
     const { gagueID } = this.state;
     const { maxValue, value, minValue } = this.props;
+
+    // explicit color calc
+    var color = '#ff0000';    // red
+    if (value < (maxValue / 3)) {
+      color = '#a9d70b';      // green
+    } else if (value < ((maxValue / 3) * 2)) {
+      color = '#f9c802';      // yellow
+    }
+
     const opts = {
       lines: 0.1,
-      angle: 0.25, // The span of the gauge arc
+      angle: 0.15, // The span of the gauge arc
       lineWidth: 0.1, // The line thickness
-      colorStart: '#f00',   // Colors
-      colorStop: '#a00',    // just experiment with them
-      strokeColor: '#eee',
-      percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]]
+      limitMax: false,
+      colorStop: color,         // just experiment with them
+      strokeColor: '#eeeeee',   // light grey
+      generateGradient: true,
+      highDpiSupport: true,
     };
 
     const target = document.getElementById(gagueID); // your canvas element
     const gauge = new Gauge.Donut(target).setOptions(opts); // create sexy gauge!
     gauge.maxValue = maxValue; // set max gauge value
+    gauge.animationSpeed = 10;
     gauge.setMinValue(minValue); // set min value
     gauge.set(value); // set actual value
   }
@@ -72,7 +83,7 @@ MetricGauge.propTypes = {
 MetricGauge.defaultProps = {
   maxValue: 100,
   unit: 'GB',
-  value: 50,
+  value: 20,
   minValue: 0,
 };
 
