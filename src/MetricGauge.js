@@ -40,7 +40,10 @@ class MetricGauge extends React.Component {
     // TODO: model validation to sort by value (key)
     // NOTE: assumption, meaning of these values are;
     //     - use the specified colour FROM the value associated with it.
-    const colorThresholds = [[0, green], [60, yellow], [80, red]];
+    const colorThresholds = [[0, green],
+                             [60, yellow],
+                             [80, red]
+                            ];
 
     // select the appropriate color for the value
     var color = colorThresholds[0][1];    // default to the first color in the list
