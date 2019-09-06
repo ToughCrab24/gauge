@@ -43,7 +43,7 @@ class MetricGauge extends React.Component {
     const colorThresholds = [[0, green], [60, yellow], [80, red]];
 
     // select the appropriate color for the value
-    var color = '#00ff00';    // solid green
+    var color = colorThresholds[0][1];    // default to the first color in the list
     for (var i = 1; i < colorThresholds.length; i++) {
       if (value < colorThresholds[i][0]) {
         break;
@@ -97,7 +97,7 @@ MetricGauge.propTypes = {
 MetricGauge.defaultProps = {
   maxValue: 100,
   unit: 'GB',
-  value: 90,
+  value: 50,
   minValue: 0,
 };
 
