@@ -30,14 +30,28 @@ class MetricGauge extends React.Component {
     const { gagueID } = this.state;
     const { maxValue, value, minValue } = this.props;
 
-    // explicit color calc
-    var color = '#ff0000';    // red
-    if (value < (maxValue / 3)) {
-      color = '#a9d70b';      // green
-    } else if (value < ((maxValue / 3) * 2)) {
-      color = '#f9c802';      // yellow
+    // setup colors and value thresholds
+    // TODO: possibly ingest these in via model...?
+    const red = '#ff0000';
+    const yellow = '#f9c802';
+    const green = '#a9d70b';
+
+    // these need to be in order
+    // TODO: model validation to sort by value (key)
+    // NOTE: assumption, meaning of these values are;
+    //     - use the specified colour FROM the value associated with it.
+    const colorThresholds = [[0, green], [60, yellow], [80, red]];
+
+    // select the appropriate color for the value
+    var color = '#00ff00';    // solid green
+    for (var i = 1; i < colorThresholds.length; i++) {
+      if (value < colorThresholds[i][0]) {
+        break;
+      }
+      color = colorThresholds[i][1];
     }
 
+    // set the gauge options
     const opts = {
       lines: 0.1,
       angle: 0.15, // The span of the gauge arc
@@ -83,7 +97,7 @@ MetricGauge.propTypes = {
 MetricGauge.defaultProps = {
   maxValue: 100,
   unit: 'GB',
-  value: 20,
+  value: 90,
   minValue: 0,
 };
 
